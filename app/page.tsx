@@ -1,3 +1,10 @@
+import Navbar from '../Components/Navbar'
 export default function Home() {
-  return <h1>Pallab</h1>;
+  return (
+    <>
+      <Navbar></Navbar>
+    <div className="container">
+    </div>
+    </>
+  )
 }
