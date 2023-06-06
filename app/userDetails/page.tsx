@@ -8,10 +8,13 @@ import axios from 'axios';
 //@ts-ignore
 import { useEffect, useState } from 'react';
 import Navbar from '../../Components/Navbar';
+import { useRouter } from 'next/navigation';
+
 const { Panel } = Collapse;
 require('./index.css');
 
 export default function page() {
+  const router = useRouter()
   const isLocalStorageAvailable =
     typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
     //@ts-ignore
@@ -79,14 +82,23 @@ export default function page() {
       console.log(error);
     }
   };
+  const handleLogout=()=>{
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    router.push('/')
+  }
   return (
     <>
       <Navbar></Navbar>
 
       <div className="profile-container">
-        <Button type="primary" onClick={showModal} className="create-btn">
+       <div className="button-div">
+       <Button type="primary" onClick={showModal} className="create-btn">
           Create Blog
         </Button>
+        <Button danger onClick={handleLogout} className="create-btn">LogOut</Button>
+       </div>
         <Modal title="Basic Modal" open={isModalOpen} onCancel={handleCancel}>
           <Form onFinish={onFinish}>
             <Form.Item
@@ -122,7 +134,7 @@ export default function page() {
           userData?.blogs?.map((blogs: any, index: any) => {
             return (
               <div className="blog-items">
-                <Collapse accordion key={index}>
+                <Collapse accordion key={index} className='accordion'>
                   <Panel header={blogs.title} key="1">
                     <p>{blogs.description}</p>
                   </Panel>
