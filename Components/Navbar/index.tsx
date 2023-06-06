@@ -1,12 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 //@ts-ignore
 import { Button, Dropdown, message } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import { UserOutlined } from '@ant-design/icons';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 require('./index.css');
 export default function index() {
   const router = useRouter();
@@ -22,11 +21,7 @@ export default function index() {
     name = localStorage.getItem('name');
   }
   let handleMenuClick = (e: any) => {
-    if (e.key === '2') {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('email');
-      localStorage.removeItem('name');
-    } else if (e.key === '1') {
+    if (e.key === '1') {
       router.push('/userDetails');
     }
   };
@@ -37,12 +32,6 @@ export default function index() {
       key: '1',
       icon: <UserOutlined />,
     },
-    {
-      label: 'Logout',
-      key: '2',
-      icon: <UserOutlined />,
-      danger: true,
-    },
   ];
   const menuProps = {
     items,
@@ -51,6 +40,14 @@ export default function index() {
   return (
     <>
       <div className="navbar-container">
+        <img
+          src="/logo.png"
+          alt=""
+          className="logo"
+          onClick={() => {
+            router.push('/');
+          }}
+        />
         <div className="nav-button">
           {accessToken && name && email ? (
             <Dropdown.Button

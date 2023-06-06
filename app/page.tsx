@@ -1,11 +1,14 @@
-'use client'
-import Navbar from '../Components/Navbar'
+'use client';
+import Navbar from '../Components/Navbar';
+import GetAllBlogs from '../Components/GetAllBlogs';
+
 export default function Home() {
   return (
-    <>
-      <Navbar></Navbar>
-    <div className="container">
+    <div>
+      <Navbar />
+      <div className="container">
+        <GetAllBlogs />
+      </div>
     </div>
-    </>
-  )
+  );
 }
