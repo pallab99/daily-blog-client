@@ -1,0 +1,27 @@
+.profile-container {
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.blog-items {
+    /* border: 1px solid steelblue; */
+    /* padding: 20px; */
+    border-radius: 20px;
+}
+.ant-modal-footer{
+    display: none;
+}
+.create-btn{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.ant-collapse-header{
+    display: flex;
+    align-self: center;
+}
+.ant-collapse-expand-icon{
+    display: flex;
+    align-items: center;
+}
