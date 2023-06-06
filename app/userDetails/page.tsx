@@ -113,10 +113,10 @@ export default function index() {
             }}
           />
         ) : (
-          userData?.blogs?.map((blogs: any) => {
+          userData?.blogs?.map((blogs: any,index:any) => {
             return (
-              <div className="blog-items">
-                <Collapse accordion>
+              <div className="blog-items" >
+                <Collapse accordion key={index}>
                   <Panel header={blogs.title} key="1">
                     <p>{blogs.description}</p>
                   </Panel>
