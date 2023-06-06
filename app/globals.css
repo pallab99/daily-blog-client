@@ -5,6 +5,12 @@
 }
 
 .container{
-    max-width: 1100px;
+    max-width: 970px;
     margin: auto;
+}
+@media only screen and (min-width: 300px) {
+    .container{
+        max-width: 350px;
+        margin: auto;
+    }
 }
