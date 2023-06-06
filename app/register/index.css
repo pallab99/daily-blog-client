@@ -2,4 +2,7 @@
     max-width: 500px;
     margin: auto;
     margin-top: 15%;
+    .ant-btn{
+        width: 100%;
+    }
 }
