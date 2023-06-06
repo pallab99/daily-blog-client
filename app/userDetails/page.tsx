@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
+//@ts-ignore
 'use client';
-import { Button, Collapse, Form, Input, Modal, Skeleton, Spin } from 'antd';
+import { Button, Collapse, Form, Input, Modal, Skeleton } from 'antd';
 import axios from 'axios';
 //@ts-ignore
 import { useEffect, useState } from 'react';
@@ -10,12 +11,15 @@ import Navbar from '../../Components/Navbar';
 const { Panel } = Collapse;
 require('./index.css');
 
-export default function index() {
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem('accessToken')
-  );
-  const [email, setEmail] = useState(localStorage.getItem('email'));
-  const [name, setName] = useState(localStorage.getItem('name'));
+export default function page() {
+  const isLocalStorageAvailable =
+    typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+    //@ts-ignore
+  let accessToken;
+
+  if (isLocalStorageAvailable) {
+    accessToken = localStorage.getItem('accessToken');
+  }
   const [userData, setUserData] = useState([]) as any[];
   const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -113,9 +117,9 @@ export default function index() {
             }}
           />
         ) : (
-          userData?.blogs?.map((blogs: any,index:any) => {
+          userData?.blogs?.map((blogs: any, index: any) => {
             return (
-              <div className="blog-items" >
+              <div className="blog-items">
                 <Collapse accordion key={index}>
                   <Panel header={blogs.title} key="1">
                     <p>{blogs.description}</p>
