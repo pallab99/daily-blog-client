@@ -27,3 +27,11 @@
     display: flex;
     justify-content: space-between;
 }
+@media only screen and (min-width: 300px) {
+    .profile-container {
+        max-width: 350px;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
