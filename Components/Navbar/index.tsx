@@ -10,17 +10,16 @@ import { useState } from 'react';
 require('./index.css');
 export default function index() {
   const router = useRouter();
-  const isLocalStorageAvailable = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
-let accessToken;
-let email;
-let name
-  if(isLocalStorageAvailable){
-    accessToken=
-      localStorage.getItem('accessToken')
-  
+  const isLocalStorageAvailable =
+    typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+  let accessToken;
+  let email;
+  let name;
+  if (isLocalStorageAvailable) {
+    accessToken = localStorage.getItem('accessToken');
+
     email = localStorage.getItem('email');
     name = localStorage.getItem('name');
-
   }
   let handleMenuClick = (e: any) => {
     if (e.key === '2') {
@@ -28,10 +27,10 @@ let name
       localStorage.removeItem('email');
       localStorage.removeItem('name');
     } else if (e.key === '1') {
-     router.push('/userDetails')
+      router.push('/userDetails');
     }
   };
- 
+
   const items = [
     {
       label: 'profile',
