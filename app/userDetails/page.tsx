@@ -32,6 +32,7 @@ export default function page() {
     axios
       .get('https://daily-blog-uz5m.onrender.com/api/blog/getBlogsByUser', {
         headers: {
+          //@ts-ignore
           Authorization: `Bearer ${accessToken}`,
         },
       })
@@ -66,6 +67,7 @@ export default function page() {
         values,
         {
           headers: {
+            //@ts-ignore
             Authorization: `Bearer ${accessToken}`,
           },
         }
