@@ -11,3 +11,9 @@
     max-height: 100px;
     overflow: hidden;
 }
+.loader{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

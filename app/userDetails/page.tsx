@@ -9,19 +9,23 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Navbar from '../../Components/Navbar';
 import { useRouter } from 'next/navigation';
+import secureLocalStorage from 'react-secure-storage';
 
 const { Panel } = Collapse;
 require('./index.css');
 
 export default function page() {
-  const router = useRouter()
+  const router = useRouter();
   const isLocalStorageAvailable =
     typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
-    //@ts-ignore
+  //@ts-ignore
   let accessToken;
 
   if (isLocalStorageAvailable) {
-    accessToken = localStorage.getItem('accessToken');
+    accessToken = secureLocalStorage.getItem('accessToken');
+  }
+  if (!accessToken) {
+    router.push('/');
   }
   const [userData, setUserData] = useState([]) as any[];
   const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
@@ -82,30 +86,37 @@ export default function page() {
       console.log(error);
     }
   };
-  const handleLogout=()=>{
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('email');
-    localStorage.removeItem('name');
-    router.push('/')
-  }
+  const handleLogout = () => {
+    secureLocalStorage.removeItem('accessToken');
+    secureLocalStorage.removeItem('email');
+    secureLocalStorage.removeItem('name');
+    router.push('/');
+  };
   return (
     <>
       <Navbar></Navbar>
 
       <div className="profile-container">
-       <div className="button-div">
-       <Button type="primary" onClick={showModal} className="create-btn">
-          Create Blog
-        </Button>
-        <Button danger onClick={handleLogout} className="create-btn">LogOut</Button>
-       </div>
-        <Modal title="Basic Modal" open={isModalOpen} onCancel={handleCancel}>
+        <div className="button-div">
+          <Button type="primary" onClick={showModal} className="create-btn">
+            Create Blog
+          </Button>
+          <Button danger onClick={handleLogout} className="create-btn">
+            LogOut
+          </Button>
+        </div>
+        <Modal
+          title="Create Blog"
+          open={isModalOpen}
+          onCancel={handleCancel}
+          className="create-blog-modal"
+        >
           <Form onFinish={onFinish}>
             <Form.Item
               name="title"
               rules={[{ required: true, message: 'Please input your title!' }]}
             >
-              <Input.TextArea placeholder="Title" />
+              <Input placeholder="Title" />
             </Form.Item>
 
             <Form.Item
@@ -118,7 +129,12 @@ export default function page() {
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit" loading={isLoading}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isLoading}
+                className="ant-btn"
+              >
                 Create
               </Button>
             </Form.Item>
@@ -133,13 +149,11 @@ export default function page() {
         ) : (
           userData?.blogs?.map((blogs: any, index: any) => {
             return (
-              <div className="blog-items">
-                <Collapse accordion key={index} className='accordion'>
-                  <Panel header={blogs.title} key="1">
+                <Collapse accordion key={index} className="accordion">
+                  <Panel header={blogs.title} key={index}>
                     <p>{blogs.description}</p>
                   </Panel>
                 </Collapse>
-              </div>
             );
           })
         )}

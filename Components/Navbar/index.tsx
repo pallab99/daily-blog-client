@@ -6,6 +6,7 @@ import { Button, Dropdown, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import { useRouter } from 'next/navigation';
+import secureLocalStorage from 'react-secure-storage';
 require('./index.css');
 export default function index() {
   const router = useRouter();
@@ -13,12 +14,12 @@ export default function index() {
     typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   let accessToken;
   let email;
-  let name;
+  let name:any;
   if (isLocalStorageAvailable) {
-    accessToken = localStorage.getItem('accessToken');
+    accessToken = secureLocalStorage.getItem('accessToken');
 
-    email = localStorage.getItem('email');
-    name = localStorage.getItem('name');
+    email = secureLocalStorage.getItem('email');
+    name = secureLocalStorage.getItem('name');
   }
   let handleMenuClick = (e: any) => {
     if (e.key === '1') {
@@ -63,6 +64,7 @@ export default function index() {
                 onClick={() => {
                   router.push('/login');
                 }}
+                type='primary'  
               >
                 Sign In
               </Button>
