@@ -22,7 +22,6 @@ export default function index() {
       setIsLoading(false);
       router.push('/login');
     } catch (error:any) {
-      console.log('error message', error);
       if (!error.response.data.success) {
         message.error(error.response.data.message);
         setIsLoading(false);
