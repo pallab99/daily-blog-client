@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
-import { Button, Spin } from 'antd';
+import { Avatar, Button, Card, Skeleton, Spin } from 'antd';
 import axios from 'axios';
-import { error } from 'console';
 import { useEffect, useState } from 'react';
+const { Meta } = Card;
+import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 
 //@ts-ignore
 require('./index.css');
@@ -20,7 +21,6 @@ export default function index() {
     axios
       .get('https://daily-blog-uz5m.onrender.com/api/blog/getAllBlogs')
       .then((response) => {
-        // console.log(response.data);
         setBlogData(response.data);
         setIsBlogloaded(false);
       })
@@ -28,10 +28,9 @@ export default function index() {
         console.log(error);
       });
   };
-  console.log(blogData);
   return (
     <>
-      {!blogData?.blog ? (
+      {/* {!blogData?.blog ? (
         <Spin className='loader' size='large'/>
       ) : (
         blogData?.blog?.map((blog: any) => {
@@ -45,7 +44,27 @@ export default function index() {
             </div>
           );
         })
-      )}
+      )} */}
+  {!blogData?.blog ? (
+        <Spin className='loader' size='large'/>
+      ) : (
+        blogData?.blog?.map((blog: any,index:any) => {
+          return (
+            <Card key={index}
+            style={{ width: 300, marginTop: 16 }}
+          >
+            <Skeleton loading={isBlogloaded} avatar active>
+              <Meta
+                avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2" />}
+                title={blog.title}
+                description={blog.description}
+              />
+            </Skeleton>
+          </Card>
+          );
+        })
+      )}  
+     
     </>
   );
 }
