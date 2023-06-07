@@ -19,21 +19,24 @@ export default function page() {
   const isLocalStorageAvailable =
     typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   //@ts-ignore
-  let accessToken;
+  let accessToken:any;
 
   if (isLocalStorageAvailable) {
     accessToken = secureLocalStorage.getItem('accessToken');
   }
-  if (!accessToken) {
-    router.push('/');
-  }
+  useEffect(()=>{
+
+    if (!accessToken) {
+      router.push('/');
+    }
+  })
   const [userData, setUserData] = useState([]) as any[];
   const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getMyProfileDetails();
-  }, [accessToken, isLoading]);
+  }, [accessToken, isLoading,router]);
   const getMyProfileDetails = () => {
     setIsUserDataLoaded(true);
     axios
@@ -44,14 +47,12 @@ export default function page() {
         },
       })
       .then((response) => {
-        // console.log('Response:', response.data);
         setUserData(response.data);
         setIsUserDataLoaded(false);
 
         // Handle the response data
       })
       .catch((error) => {
-        console.error('Error:', error);
         setIsUserDataLoaded(false);
 
         // Handle errors
@@ -65,7 +66,6 @@ export default function page() {
     setIsModalOpen(false);
   };
   const onFinish = async (values: any) => {
-    console.log(values);
     try {
       setIsLoading(true);
       const response = await axios.post(
@@ -79,11 +79,9 @@ export default function page() {
           },
         }
       );
-      console.log(response);
       setIsLoading(false);
       setIsModalOpen(false);
     } catch (error) {
-      console.log(error);
     }
   };
   const handleLogout = () => {
