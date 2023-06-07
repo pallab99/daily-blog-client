@@ -32,7 +32,7 @@ export default function index() {
   return (
     <>
       {!blogData?.blog ? (
-        <Spin />
+        <Spin className='loader' size='large'/>
       ) : (
         blogData?.blog?.map((blog: any) => {
           return (

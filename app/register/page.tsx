@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -21,8 +21,12 @@ export default function index() {
       setUserData(response.data);
       setIsLoading(false);
       router.push('/login');
-    } catch (error) {
+    } catch (error:any) {
       console.log('error message', error);
+      if (!error.response.data.success) {
+        message.error(error.response.data.message);
+        setIsLoading(false);
+      }
     }
   };
 

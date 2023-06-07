@@ -63,6 +63,7 @@ export default function index() {
                 onClick={() => {
                   router.push('/login');
                 }}
+                type='primary'  
               >
                 Sign In
               </Button>
