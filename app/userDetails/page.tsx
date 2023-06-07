@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Navbar from '../../Components/Navbar';
 import { useRouter } from 'next/navigation';
+import secureLocalStorage from 'react-secure-storage';
 
 const { Panel } = Collapse;
 require('./index.css');
@@ -21,7 +22,7 @@ export default function page() {
   let accessToken;
 
   if (isLocalStorageAvailable) {
-    accessToken = localStorage.getItem('accessToken');
+    accessToken = secureLocalStorage.getItem('accessToken');
   }
   if (!accessToken) {
     router.push('/');
@@ -86,9 +87,9 @@ export default function page() {
     }
   };
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('email');
-    localStorage.removeItem('name');
+    secureLocalStorage.removeItem('accessToken');
+    secureLocalStorage.removeItem('email');
+    secureLocalStorage.removeItem('name');
     router.push('/');
   };
   return (
