@@ -22,7 +22,7 @@ export default function page() {
   let accessToken:any;
 
   if (isLocalStorageAvailable) {
-    accessToken = secureLocalStorage.getItem('accessToken');
+    accessToken = localStorage.getItem('accessToken');
   }
   useEffect(()=>{
 
@@ -85,9 +85,9 @@ export default function page() {
     }
   };
   const handleLogout = () => {
-    secureLocalStorage.removeItem('accessToken');
-    secureLocalStorage.removeItem('email');
-    secureLocalStorage.removeItem('name');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
     router.push('/');
   };
   return (

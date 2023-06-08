@@ -20,9 +20,9 @@ export default function index() {
         values
       );
       setUserData(response.data);
-      secureLocalStorage.setItem('accessToken', response.data.accessToken);
-      secureLocalStorage.setItem('name', response.data.user.name);
-      secureLocalStorage.setItem('email', response.data.user.email);
+      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('name', response.data.user.name);
+      localStorage.setItem('email', response.data.user.email);
       message.success('Login successful');
       setIsLoading(false);
       router.push('/');

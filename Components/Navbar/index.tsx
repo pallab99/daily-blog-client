@@ -14,12 +14,12 @@ export default function index() {
     typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   let accessToken;
   let email;
-  let name:any;
+  let name: any;
   if (isLocalStorageAvailable) {
-    accessToken = secureLocalStorage.getItem('accessToken');
+    accessToken = localStorage.getItem('accessToken');
 
-    email = secureLocalStorage.getItem('email');
-    name = secureLocalStorage.getItem('name');
+    email = localStorage.getItem('email');
+    name = localStorage.getItem('name');
   }
   let handleMenuClick = (e: any) => {
     if (e.key === '1') {
@@ -50,7 +50,7 @@ export default function index() {
           }}
         />
         <div className="nav-button">
-          {accessToken && name && email ? (
+          {accessToken ? (
             <Dropdown.Button
               menu={menuProps}
               placement="bottom"
@@ -64,7 +64,7 @@ export default function index() {
                 onClick={() => {
                   router.push('/login');
                 }}
-                type='primary'  
+                type="primary"
               >
                 Sign In
               </Button>
