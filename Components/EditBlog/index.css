@@ -1,0 +1,12 @@
+
+.edit-blog-container{
+    .ant-btn{
+        width: 100%;
+    }
+    .ant-modal-footer{
+        display:none;
+    }
+}
+.ant-modal-footer{
+    display:none;
+}
