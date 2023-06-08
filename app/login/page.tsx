@@ -4,7 +4,6 @@ import { Button, Checkbox, Form, Input, message } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import secureLocalStorage from 'react-secure-storage';
 require('./index.css');
 
 export default function index() {

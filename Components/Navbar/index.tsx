@@ -4,10 +4,9 @@
 //@ts-ignore
 import { Button, Dropdown, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-
 import { useRouter } from 'next/navigation';
-import secureLocalStorage from 'react-secure-storage';
 require('./index.css');
+
 export default function index() {
   const router = useRouter();
   const isLocalStorageAvailable =
