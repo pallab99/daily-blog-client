@@ -18,8 +18,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Navbar from '../../Components/Navbar';
 import { useRouter } from 'next/navigation';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 const { Panel } = Collapse;
+import { ToTopOutlined } from '@ant-design/icons';
 require('./index.css');
 
 export default function page() {
@@ -98,8 +98,7 @@ export default function page() {
     localStorage.removeItem('name');
     router.push('/');
   };
-  console.log('blog ', blogTitle?.target?.value);
-  console.log('blog ', blogDescription?.target?.value);
+
   const confirm = (blogId: any) => {
     axios
       .delete(`https://daily-blog-uz5m.onrender.com/api/blog/${blogId}`)
@@ -182,21 +181,14 @@ export default function page() {
         ) : (
           userData?.blogs?.map((blogs: any, index: any) => {
             return (
-              <Collapse accordion key={index} className="accordion">
-                <Panel header={blogs.title} key={index}>
+              <Collapse accordion key={blogs?._id} className="accordion">
+                <Panel header={blogs?.title} key={blogs?._id}>
                   <div className="blog-wrapper">
-                    <p>{blogs.description}</p>
+                    <p>{blogs?.description}</p>
                     <div className="blog-actions">
-                      <EditOutlined></EditOutlined>
-                      <Popconfirm
-                        title="Delete this blog"
-                        description="Are you sure to delete this blog?"
-                        onConfirm={() => confirm(blogs?._id)}
-                        okText="Yes"
-                        cancelText="No"
-                      >
-                        <DeleteOutlined />
-                      </Popconfirm>
+                      <ToTopOutlined  onClick={() => {
+                          router.push(`/blogByUser/${blogs?._id}`);
+                        }}/>
                     </div>
                   </div>
                 </Panel>

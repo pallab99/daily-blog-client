@@ -39,7 +39,7 @@ export default function index() {
           return (
             <Card
               key={index}
-              style={{ width: 300, marginTop: 16 }}
+              style={{marginTop: 16 }}
               onClick={() => {
                 router.push(`/blog/${blog._id}`);
               }}
