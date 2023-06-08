@@ -1,0 +1,26 @@
+.single-blog-div {
+    max-width: 350px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 20px;
+}
+
+.posted-by {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user {
+    display: flex;
+    gap: 8px;
+}
+
+.skeleton-center {
+    max-width: 350px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

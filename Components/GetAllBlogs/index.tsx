@@ -1,15 +1,17 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
-import { Button, Spin } from 'antd';
+import { Avatar, Card, Skeleton, Spin } from 'antd';
 import axios from 'axios';
-import { error } from 'console';
 import { useEffect, useState } from 'react';
+const { Meta } = Card;
+import { useRouter } from 'next/navigation';
 
 //@ts-ignore
 require('./index.css');
 
 export default function index() {
+  const router = useRouter();
   const [isBlogloaded, setIsBlogloaded] = useState(false);
   const [blogData, setBlogData] = useState([]) as any;
   useEffect(() => {
@@ -20,7 +22,6 @@ export default function index() {
     axios
       .get('https://daily-blog-uz5m.onrender.com/api/blog/getAllBlogs')
       .then((response) => {
-        // console.log(response.data);
         setBlogData(response.data);
         setIsBlogloaded(false);
       })
@@ -28,21 +29,31 @@ export default function index() {
         console.log(error);
       });
   };
-  console.log(blogData);
   return (
     <>
+
       {!blogData?.blog ? (
-        <Spin className='loader' size='large'/>
+        <Spin className="loader" size="large" />
       ) : (
-        blogData?.blog?.map((blog: any) => {
+        blogData?.blog?.map((blog: any, index: any) => {
           return (
-            <div className="blog-items" key={blog?._id}>
-              <div className="items">
-                <h1>{blog?.title}</h1>
-                <p>{blog?.description}</p>
-                <p>{blog?.userName}</p>
-              </div>
-            </div>
+            <Card
+              key={index}
+              style={{ width: 300, marginTop: 16 }}
+              onClick={() => {
+                router.push(`/blog/${blog._id}`);
+              }}
+            >
+              <Skeleton loading={isBlogloaded} avatar active>
+                <Meta
+                  avatar={
+                    <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2" />
+                  }
+                  title={blog.title}
+                  description={blog.description}
+                />
+              </Skeleton>
+            </Card>
           );
         })
       )}

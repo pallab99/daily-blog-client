@@ -32,6 +32,14 @@
         width: 100%;
     }
 }
+.blog-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+.blog-actions{
+    display: flex;
+    gap: 8px;
+}
 @media only screen and (min-width: 300px) {
     .profile-container {
         max-width: 350px;
