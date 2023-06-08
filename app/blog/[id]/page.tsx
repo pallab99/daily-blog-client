@@ -46,7 +46,7 @@ export default function Page({ params }: { params: { id: string } }) {
             </Typography.Paragraph>
           </div>
           <Typography.Title>{blogData?.blog?.title}</Typography.Title>
-          <Typography.Paragraph>
+          <Typography.Paragraph style={{textAlign:"justify"}}>
             {blogData?.blog?.description}
           </Typography.Paragraph>
         </div>
