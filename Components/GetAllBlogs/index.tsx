@@ -1,16 +1,17 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
-import { Avatar, Button, Card, Skeleton, Spin } from 'antd';
+import { Avatar, Card, Skeleton, Spin } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 const { Meta } = Card;
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/navigation';
 
 //@ts-ignore
 require('./index.css');
 
 export default function index() {
+  const router = useRouter();
   const [isBlogloaded, setIsBlogloaded] = useState(false);
   const [blogData, setBlogData] = useState([]) as any;
   useEffect(() => {
@@ -30,41 +31,32 @@ export default function index() {
   };
   return (
     <>
-      {/* {!blogData?.blog ? (
-        <Spin className='loader' size='large'/>
+
+      {!blogData?.blog ? (
+        <Spin className="loader" size="large" />
       ) : (
-        blogData?.blog?.map((blog: any) => {
+        blogData?.blog?.map((blog: any, index: any) => {
           return (
-            <div className="blog-items" key={blog?._id}>
-              <div className="items">
-                <h1>{blog?.title}</h1>
-                <p>{blog?.description}</p>
-                <p>{blog?.userName}</p>
-              </div>
-            </div>
+            <Card
+              key={index}
+              style={{ width: 300, marginTop: 16 }}
+              onClick={() => {
+                router.push(`/blog/${blog._id}`);
+              }}
+            >
+              <Skeleton loading={isBlogloaded} avatar active>
+                <Meta
+                  avatar={
+                    <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2" />
+                  }
+                  title={blog.title}
+                  description={blog.description}
+                />
+              </Skeleton>
+            </Card>
           );
         })
-      )} */}
-  {!blogData?.blog ? (
-        <Spin className='loader' size='large'/>
-      ) : (
-        blogData?.blog?.map((blog: any,index:any) => {
-          return (
-            <Card key={index}
-            style={{ width: 300, marginTop: 16 }}
-          >
-            <Skeleton loading={isBlogloaded} avatar active>
-              <Meta
-                avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2" />}
-                title={blog.title}
-                description={blog.description}
-              />
-            </Skeleton>
-          </Card>
-          );
-        })
-      )}  
-     
+      )}
     </>
   );
 }
