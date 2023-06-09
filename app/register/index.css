@@ -2,9 +2,13 @@
     max-width: 500px;
     margin: auto;
     margin-top: 15%;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    padding: 60px 40px;
+    border-top: 8px solid #1677ff;
     .ant-btn{
         width: 100%;
     }
+    
 }
 @media only screen and (min-width: 300px) {
     .form-div{
