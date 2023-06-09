@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
-import { Button, Checkbox, Form, Input, message } from 'antd';
+import { Button, Checkbox, Form, Input, Typography, message } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -62,9 +62,16 @@ export default function index() {
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={isLoading}>
-              Login
+              Sign In
             </Button>
           </Form.Item>
+          <Button
+                onClick={() => {
+                  router.push('/register');
+                }}
+              >
+                Sign Up
+              </Button>
         </Form>
       </div>
     </>

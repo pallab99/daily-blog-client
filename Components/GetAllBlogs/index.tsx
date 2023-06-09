@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 const { Meta } = Card;
 import { useRouter } from 'next/navigation';
-
+import Loader from '../Loader'
 //@ts-ignore
 require('./index.css');
 
@@ -33,13 +33,13 @@ export default function index() {
     <>
 
       {!blogData?.blog ? (
-        <Spin className="loader" size="large" />
+        <Loader/>
       ) : (
         blogData?.blog?.map((blog: any, index: any) => {
           return (
             <Card
               key={index}
-              style={{ width: 300, marginTop: 16 }}
+              style={{marginTop: 16 }}
               onClick={() => {
                 router.push(`/blog/${blog._id}`);
               }}

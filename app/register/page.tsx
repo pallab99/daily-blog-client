@@ -21,7 +21,7 @@ export default function index() {
       setUserData(response.data);
       setIsLoading(false);
       router.push('/login');
-    } catch (error:any) {
+    } catch (error: any) {
       if (!error.response.data.success) {
         message.error(error.response.data.message);
         setIsLoading(false);
@@ -55,9 +55,16 @@ export default function index() {
 
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={isLoading}>
-              Register
+              Sign Up
             </Button>
           </Form.Item>
+          <Button
+            onClick={() => {
+              router.push('/login');
+            }}
+          >
+            Sign In
+          </Button>
         </Form>
       </div>
     </>
