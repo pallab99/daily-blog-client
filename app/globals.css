@@ -8,9 +8,10 @@
     max-width: 970px;
     margin: auto;
 }
-@media only screen and (min-width: 300px) {
+@media only screen and (max-width: 960px) {
     .container{
-        max-width: 350px;
-        margin: auto;
+        margin-left:20px ;
+        margin-right:20px ;
+
     }
 }
