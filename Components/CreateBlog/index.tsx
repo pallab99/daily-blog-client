@@ -33,12 +33,16 @@ export default function index(props: any) {
     } catch (error) {}
   };
 
+  const closeModal=()=>{
+    props?.setIsModalOpen(false)
+  }
+
   return (
     <>
       <Modal
         title="Create Blog"
         open={props?.open}
-        onCancel={props?.setIsModalOpen}
+        onCancel={closeModal}
         className="create-blog-modal"
       >
         <Form onFinish={onFinish}>

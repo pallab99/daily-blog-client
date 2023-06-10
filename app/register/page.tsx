@@ -31,7 +31,7 @@ export default function index() {
 
   return (
     <>
-      <div className="form-div">
+      <div className="form-div-register">
         <Form onFinish={onFinish}>
           <Form.Item
             name="name"
