@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import dateFormat from 'dateformat';
 import Navbar from '../../../Components/Navbar';
-import './index.css';
+require('./index.css');
 import EditBlog from '../../../Components/EditBlog';
 import { useRouter } from 'next/navigation';
 
@@ -59,7 +59,7 @@ export default function Page({ params }: { params: { id: string } }) {
     <>
       <Navbar></Navbar>
       {blogData?.blog ? (
-        <div className="single-blog-div">
+        <div className="single-blog-div" style={{maxWidth:"960px"}}>
           <div className="posted-by">
             <div className="user">
               <Avatar
