@@ -14,6 +14,8 @@ export default function page() {
   const [result, setResult] = useState();
   const [isCodeExpired, setIsCodeExpired] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+
+
   const handleOnChange = (res: string) => {
     console.log(res);
     //@ts-ignore
