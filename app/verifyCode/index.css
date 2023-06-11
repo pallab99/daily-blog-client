@@ -22,3 +22,20 @@
     justify-content: center;
     gap: 10px;
 }
+/* .resend-code{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
+} */
+.ant-form-item-control-input-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.resend-code-modal{
+.ant-modal-footer{
+    display: none;
+}
+}
