@@ -4,6 +4,7 @@ import { Button, Form, Input, message } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { emailRegex } from '@/helper/regex';
 require('./index.css');
 
 export default function index() {
@@ -12,6 +13,11 @@ export default function index() {
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState();
   const onFinish = async (values: any) => {
+    const {email}=values;
+    if(!emailRegex.test(email)){
+      message.error("This is not a valid email")
+    }
+    else{
     setIsLoading(true);
     try {
       const response = await axios.post(
@@ -28,6 +34,8 @@ export default function index() {
         setIsLoading(false);
       }
     }
+  }
+
   };
 
   return (
