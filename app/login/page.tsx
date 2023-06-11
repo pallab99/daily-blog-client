@@ -2,12 +2,21 @@
 'use client';
 import { Button, Checkbox, Form, Input, Typography, message } from 'antd';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { emailRegex } from '@/helper/regex';
+import Loader from '../../Components/Preloader';
 require('./index.css');
 
 export default function index() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false); 
+    }, 2000);
+  }, []);
+
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -47,45 +56,41 @@ export default function index() {
 
   return (
     <>
-      <div className="form-div-login">
-        <Form onFinish={onFinish}>
-          <Form.Item
-            name="email"
-            rules={[{ required: true, message: 'Please input your email!' }]}
-          >
-            <Input placeholder="Email" />
-          </Form.Item>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="form-div-login">
+          <Form onFinish={onFinish}>
+            <Form.Item
+              name="email"
+              rules={[{ required: true, message: 'Please input your email!' }]}
+            >
+              <Input placeholder="Email" />
+            </Form.Item>
 
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
-          >
-            <Input.Password placeholder="Password" />
-          </Form.Item>
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" loading={isLoading}>
-              Sign In
+            <Form.Item
+              name="password"
+              rules={[
+                { required: true, message: 'Please input your password!' },
+              ]}
+            >
+              <Input.Password placeholder="Password" />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" loading={isLoading}>
+                Sign In
+              </Button>
+            </Form.Item>
+            <Button
+              onClick={() => {
+                router.push('/register');
+              }}
+            >
+              Sign Up
             </Button>
-          </Form.Item>
-          <Button
-            onClick={() => {
-              router.push('/register');
-            }}
-          >
-            Sign Up
-          </Button>
-        </Form>
-      </div>
+          </Form>
+        </div>
+      )}
     </>
   );
 }

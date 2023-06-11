@@ -6,15 +6,22 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import AuthCode from 'react-auth-code-input';
+import Loader from '../../Components/Preloader'
 require('./index.css');
 
 export default function page() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false); 
+    }, 2000);
+  }, []);
   const router = useRouter();
   const AuthInputRef = useRef(null);
   const [result, setResult] = useState();
   const [isCodeExpired, setIsCodeExpired] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-
 
   const handleOnChange = (res: string) => {
     console.log(res);
@@ -64,77 +71,80 @@ export default function page() {
       });
   };
   return (
-    <div className="verification-code-container">
-      <Form onFinish={verifyCode}>
-        <Form.Item
-          name="verificationCode"
-          rules={[
-            { required: true, message: 'Please input your verificationCode!' },
-          ]}
-        >
-          <AuthCode
-            onChange={handleOnChange}
-            ref={AuthInputRef}
-            inputClassName="code-input"
-          />
-        </Form.Item>
+    <>
+   
+    {loading?<Loader/>:<div className="verification-code-container">
+    <Form onFinish={verifyCode}>
+      <Form.Item
+        name="verificationCode"
+        rules={[
+          { required: true, message: 'Please input your verificationCode!' },
+        ]}
+      >
+        <AuthCode
+          onChange={handleOnChange}
+          ref={AuthInputRef}
+          inputClassName="code-input"
+        />
+      </Form.Item>
+      <Form.Item>
+        <div className="code-button">
+          <Button
+            danger
+            size="large"
+            //@ts-ignore
+            onClick={() => AuthInputRef.current?.clear()}
+          >
+            Clear
+          </Button>
+          <Button type="primary" htmlType="submit" size="large">
+            Verify
+          </Button>
+        </div>
+      </Form.Item>
+      {isCodeExpired ? (
         <Form.Item>
-          <div className="code-button">
+          <div className="resend-code">
+            <Typography.Paragraph>This code is expired</Typography.Paragraph>
             <Button
-              danger
-              size="large"
-              //@ts-ignore
-              onClick={() => AuthInputRef.current?.clear()}
+              type="link"
+              onClick={() => {
+                setOpenModal(true);
+              }}
             >
-              Clear
-            </Button>
-            <Button type="primary" htmlType="submit" size="large">
-              Verify
+              Resend code
             </Button>
           </div>
         </Form.Item>
-        {isCodeExpired ? (
-          <Form.Item>
-            <div className="resend-code">
-              <Typography.Paragraph>This code is expired</Typography.Paragraph>
-              <Button
-                type="link"
-                onClick={() => {
-                  setOpenModal(true);
-                }}
-              >
-                Resend code
-              </Button>
-            </div>
+      ) : null}
+      <Modal
+        title="Resend Verification Code"
+        open={openModal}
+        onCancel={() => {
+          setOpenModal(false);
+        }}
+        className="resend-code-modal"
+      >
+        <Form onFinish={resendCode}>
+          <Form.Item
+            name="email"
+            rules={[{ required: true, message: 'Please input your email!' }]}
+          >
+            <Input placeholder="Email" />
           </Form.Item>
-        ) : null}
-        <Modal
-          title="Resend Verification Code"
-          open={openModal}
-          onCancel={() => {
-            setOpenModal(false);
-          }}
-          className="resend-code-modal"
-        >
-          <Form onFinish={resendCode}>
-            <Form.Item
-              name="email"
-              rules={[{ required: true, message: 'Please input your email!' }]}
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ width: '100%' }}
             >
-              <Input placeholder="Email" />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ width: '100%' }}
-              >
-                Resend code
-              </Button>
-            </Form.Item>
-          </Form>
-        </Modal>
-      </Form>
-    </div>
+              Resend code
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </Form>
+  </div>}
+  </>
   );
 }
