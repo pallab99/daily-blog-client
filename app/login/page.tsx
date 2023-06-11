@@ -20,12 +20,10 @@ export default function index() {
       );
       setUserData(response.data);
       console.log(response.data);
-      if(!response.data.user.isVerified) {
-        message.error("Please verify your code")
-        router.push('/verifyCode')
-      }
-      else{
-
+      if (!response.data.user.isVerified) {
+        message.error('Please verify your code');
+        router.push('/verifyCode');
+      } else {
         localStorage.setItem('accessToken', response.data.accessToken);
         localStorage.setItem('name', response.data.user.name);
         localStorage.setItem('email', response.data.user.email);
@@ -74,12 +72,12 @@ export default function index() {
             </Button>
           </Form.Item>
           <Button
-                onClick={() => {
-                  router.push('/register');
-                }}
-              >
-                Sign Up
-              </Button>
+            onClick={() => {
+              router.push('/register');
+            }}
+          >
+            Sign Up
+          </Button>
         </Form>
       </div>
     </>

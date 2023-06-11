@@ -9,3 +9,9 @@
         width: 100%;
     }
 }
+:where(.css-dev-only-do-not-override-k7429z).ant-col-offset-8{
+    margin-inline-start: 0px;
+}
+.ant-form-item-control-input{
+    display: none;
+}
