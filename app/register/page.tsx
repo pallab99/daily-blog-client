@@ -20,7 +20,8 @@ export default function index() {
       );
       setUserData(response.data);
       setIsLoading(false);
-      router.push('/login');
+      // router.push('/login');
+      router.push('/verifyCode');
     } catch (error: any) {
       if (!error.response.data.success) {
         message.error(error.response.data.message);
