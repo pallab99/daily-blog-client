@@ -19,12 +19,20 @@ export default function index() {
         values
       );
       setUserData(response.data);
-      localStorage.setItem('accessToken', response.data.accessToken);
-      localStorage.setItem('name', response.data.user.name);
-      localStorage.setItem('email', response.data.user.email);
-      message.success('Login successful');
-      setIsLoading(false);
-      router.push('/');
+      console.log(response.data);
+      if(!response.data.user.isVerified) {
+        message.error("Please verify your code")
+        router.push('/verifyCode')
+      }
+      else{
+
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('name', response.data.user.name);
+        localStorage.setItem('email', response.data.user.email);
+        message.success('Login successful');
+        setIsLoading(false);
+        router.push('/');
+      }
     } catch (error: any) {
       if (!error.response.data.success) {
         message.error(error.response.data.message);
