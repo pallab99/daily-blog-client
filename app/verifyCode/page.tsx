@@ -53,6 +53,7 @@ export default function page() {
         setIsCodeExpired(false);
         setOpenModal(false);
         message.success(response.data.message);
+        //@ts-ignore
         AuthInputRef.current?.clear();
       })
       .catch((err) => {
@@ -80,6 +81,7 @@ export default function page() {
             <Button
               danger
               size="large"
+              //@ts-ignore
               onClick={() => AuthInputRef.current?.clear()}
             >
               Clear
