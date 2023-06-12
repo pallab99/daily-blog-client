@@ -1,0 +1,8 @@
+.forget-pass-container{
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 340px;
+    margin: auto;
+}
