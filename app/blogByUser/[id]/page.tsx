@@ -9,6 +9,7 @@ import Navbar from '../../../Components/Navbar';
 require('./index.css');
 import EditBlog from '../../../Components/EditBlog';
 import { useRouter } from 'next/navigation';
+import { Tooltip } from '@mui/material';
 
 export default function Page({ params }: { params: { id: string } }) {
   const [isBlogloaded, setIsBlogloaded] = useState(false);
@@ -22,12 +23,12 @@ export default function Page({ params }: { params: { id: string } }) {
   if (isLocalStorageAvailable) {
     accessToken = localStorage.getItem('accessToken');
   }
-  if(!accessToken) {
-    router.push('/')
+  if (!accessToken) {
+    router.push('/');
   }
   useEffect(() => {
     getSingleBlog(params.id);
-  }, [params.id,openEditBlogMOdal]);
+  }, [params.id, openEditBlogMOdal]);
 
   const getSingleBlog = (blogId: string) => {
     setIsBlogloaded(true);
@@ -38,7 +39,7 @@ export default function Page({ params }: { params: { id: string } }) {
         setIsBlogloaded(false);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   };
   const confirm = () => {
@@ -46,12 +47,10 @@ export default function Page({ params }: { params: { id: string } }) {
       .delete(`https://daily-blog-uz5m.onrender.com/api/blog/${params.id}`)
       .then((response) => {
         message.success('Blog deleted successfully');
-        // seBlogDeleted(true);
         router.push('/userDetails');
       })
       .catch((error) => {
         message.error('SomeThing went wrong');
-        // seBlogDeleted(false);
       });
   };
 
@@ -59,7 +58,7 @@ export default function Page({ params }: { params: { id: string } }) {
     <>
       <Navbar></Navbar>
       {blogData?.blog ? (
-        <div className="single-blog-div" style={{maxWidth:"960px"}}>
+        <div className="single-blog-div" style={{ maxWidth: '960px' }}>
           <div className="posted-by">
             <div className="user">
               <Avatar
@@ -76,20 +75,26 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
           <div className="title-div">
             <Typography.Title>{blogData?.blog?.title}</Typography.Title>
-            {accessToken?<div className="del-edit-icon">
-              <EditOutlined
-                onClick={() => setOpenEditBlogMOdal(true)}
-              ></EditOutlined>
-              <Popconfirm
-                title="Delete this blog"
-                description="Are you sure to delete this blog?"
-                onConfirm={confirm}
-                okText="Yes"
-                cancelText="No"
-              >
-                <DeleteOutlined />
-              </Popconfirm>
-            </div>:null}
+            {accessToken ? (
+              <div className="del-edit-icon">
+                <Tooltip title="Edit Blog" placement="top" arrow>
+                  <EditOutlined
+                    onClick={() => setOpenEditBlogMOdal(true)}
+                  ></EditOutlined>
+                </Tooltip>
+                <Popconfirm
+                  title="Delete this blog"
+                  description="Are you sure to delete this blog?"
+                  onConfirm={confirm}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Tooltip title="Delete Blog" placement="top" arrow>
+                    <DeleteOutlined />
+                  </Tooltip>
+                </Popconfirm>
+              </div>
+            ) : null}
           </div>
           <Typography.Paragraph style={{ textAlign: 'justify' }}>
             {blogData?.blog?.description}

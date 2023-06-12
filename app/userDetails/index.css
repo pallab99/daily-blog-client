@@ -40,7 +40,14 @@
     display: flex;
     gap: 8px;
 }
-
+.title-style{
+    width: fit-content;
+}
+.title-style:hover{
+    color: #1677ff;
+    cursor: pointer;
+    font-size: 32px;
+}
 @media only screen and (max-width: 960px) {
     .profile-container {
         max-width: 100%;

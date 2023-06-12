@@ -10,8 +10,15 @@ import { useEffect, useState } from 'react';
 import Navbar from '../../Components/Navbar';
 import CreateBlog from '../../Components/CreateBlog';
 import { useRouter } from 'next/navigation';
-const { Panel } = Collapse;
-import { ToTopOutlined } from '@ant-design/icons';
+import {
+  Avatar,
+  Divider,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+} from '@mui/material';
 require('./index.css');
 
 export default function page() {
@@ -34,7 +41,10 @@ export default function page() {
   const [isLoading, setIsLoading] = useState(false);
   const [blogDeleted, seBlogDeleted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [width, setWidth] = useState() as any;
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
   useEffect(() => {
     if (!isLoading) {
       getMyProfileDetails();
@@ -61,24 +71,14 @@ export default function page() {
     setIsModalOpen(true);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('email');
-    localStorage.removeItem('name');
-    router.push('/');
-  };
-
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar />
 
       <div className="profile-container">
         <div className="button-div">
           <Button type="primary" onClick={showModal} className="create-btn">
             Create Blog
-          </Button>
-          <Button danger onClick={handleLogout} className="create-btn">
-            LogOut
           </Button>
         </div>
         {!userData?.blogs ? (
@@ -90,20 +90,47 @@ export default function page() {
         ) : (
           userData?.blogs?.map((blogs: any, index: any) => {
             return (
-              <Collapse accordion key={blogs?._id} className="accordion">
-                <Panel header={blogs?.title} key={blogs?._id}>
-                  <div className="blog-wrapper">
-                    <p>{blogs?.description}</p>
-                    <div className="blog-actions">
-                      <ToTopOutlined
+              <List
+                sx={{
+                  width: '100%',
+                  bgcolor: 'background.paper',
+                }}
+              >
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        variant={width >= 450 ? 'h4' : 'h6'}
+                        className="title-style"
                         onClick={() => {
-                          router.push(`/blogByUser/${blogs?._id}`);
+                          router.push(`/blogByUser/${blogs._id}`);
                         }}
-                      />
-                    </div>
-                  </div>
-                </Panel>
-              </Collapse>
+                      >
+                        {blogs?.title}
+                      </Typography>
+                    }
+                    secondary={
+                      <>
+                        <Typography
+                          sx={{ display: 'inline' }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {blogs?.description}
+                        </Typography>
+                      </>
+                    }
+                  />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+              </List>
             );
           })
         )}

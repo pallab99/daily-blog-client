@@ -13,7 +13,7 @@ export default function index() {
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false); 
+      setLoading(false);
     }, 2000);
   }, []);
 
@@ -75,6 +75,16 @@ export default function index() {
               ]}
             >
               <Input.Password placeholder="Password" />
+            </Form.Item>
+            <Form.Item className="forget-pass-btn">
+              <Button
+                type="link"
+                onClick={() => {
+                  router.push('/forget-password');
+                }}
+              >
+                Forget Password?
+              </Button>
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={isLoading}>
