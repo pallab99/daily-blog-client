@@ -3,7 +3,7 @@
 'use client';
 //@ts-ignore
 import { Button, Dropdown, message } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, WarningOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 require('./index.css');
 
@@ -20,9 +20,17 @@ export default function index() {
     email = localStorage.getItem('email');
     name = localStorage.getItem('name');
   }
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    router.push('/');
+  };
   let handleMenuClick = (e: any) => {
     if (e.key === '1') {
       router.push('/userDetails');
+    } else if (e.key === '2') {
+      handleLogout();
     }
   };
 
@@ -31,6 +39,12 @@ export default function index() {
       label: 'profile',
       key: '1',
       icon: <UserOutlined />,
+    },
+    {
+      label: 'Logout',
+      key: '2',
+      danger: true,
+      icon: <WarningOutlined />,
     },
   ];
   const menuProps = {
