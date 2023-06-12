@@ -15,3 +15,7 @@
 .ant-form-item-control-input{
     display: none;
 }
+.forget-pass-btn{
+    display: flex;
+    justify-content: flex-end;
+}
