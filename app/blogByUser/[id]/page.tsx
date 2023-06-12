@@ -47,12 +47,10 @@ export default function Page({ params }: { params: { id: string } }) {
       .delete(`https://daily-blog-uz5m.onrender.com/api/blog/${params.id}`)
       .then((response) => {
         message.success('Blog deleted successfully');
-        // seBlogDeleted(true);
         router.push('/userDetails');
       })
       .catch((error) => {
         message.error('SomeThing went wrong');
-        // seBlogDeleted(false);
       });
   };
 

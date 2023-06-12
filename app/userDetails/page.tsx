@@ -10,8 +10,6 @@ import { useEffect, useState } from 'react';
 import Navbar from '../../Components/Navbar';
 import CreateBlog from '../../Components/CreateBlog';
 import { useRouter } from 'next/navigation';
-const { Panel } = Collapse;
-import { ToTopOutlined } from '@ant-design/icons';
 import {
   Avatar,
   Divider,
@@ -21,7 +19,6 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import React from 'react';
 require('./index.css');
 
 export default function page() {
@@ -74,24 +71,14 @@ export default function page() {
     setIsModalOpen(true);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('email');
-    localStorage.removeItem('name');
-    router.push('/');
-  };
-
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar />
 
       <div className="profile-container">
         <div className="button-div">
           <Button type="primary" onClick={showModal} className="create-btn">
             Create Blog
-          </Button>
-          <Button danger onClick={handleLogout} className="create-btn">
-            LogOut
           </Button>
         </div>
         {!userData?.blogs ? (
