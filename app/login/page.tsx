@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
-import { Button, Checkbox, Form, Input, Typography, message } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -39,8 +39,8 @@ export default function index() {
           router.push('/verifyCode');
         } else {
           localStorage.setItem('accessToken', response.data.accessToken);
-          localStorage.setItem('name', response.data.user.name);
-          localStorage.setItem('email', response.data.user.email);
+          // localStorage.setItem('name', response.data.user.name);
+          // localStorage.setItem('email', response.data.user.email);
           message.success('Login successful');
           setIsLoading(false);
           router.push('/');

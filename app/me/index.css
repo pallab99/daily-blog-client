@@ -1,0 +1,10 @@
+.me-div{
+    height: 100dvh;
+    max-width: 310px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
