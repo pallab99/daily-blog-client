@@ -6,11 +6,19 @@ require('./index.css');
 import Loader from '@/Components/Loader';
 import Navbar from '@/Components/Navbar';
 import { decodeJWT } from '@/helper/jwt';
-import { Button, Form, Input, message } from 'antd';
+import {
+  Button,
+  FloatButton,
+  Form,
+  Input,
+  Popconfirm,
+  Tooltip,
+  message,
+} from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-
+import { DeleteFilled } from '@ant-design/icons';
 export default function page() {
   const router = useRouter();
   const isLocalStorageAvailable =
@@ -54,7 +62,6 @@ export default function page() {
         setIsUserDataLoaded(false);
       });
   };
-  console.log(userData);
   const updateUserDetails = async (values: any) => {
     setUpdateDetailsLoader(true);
     axios
@@ -70,6 +77,30 @@ export default function page() {
       .catch((error) => {
         message.error('Error updating user details');
         setIsUserDataLoaded(false);
+      });
+  };
+  const logOut = () => {
+    axios
+      .get('https://daily-blog-uz5m.onrender.com/api/user/logout')
+      .then((response) => {
+        localStorage.removeItem('accessToken');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const deleteAccount = () => {
+    axios
+      .delete(
+        `https://daily-blog-uz5m.onrender.com/api/user/delete-user-account/${userData?.user?._id}`
+      )
+      .then((response) => {
+        message.error('Account deleted successfully');
+        router.push('/');
+        logOut();
+      })
+      .catch((error) => {
+        message.warning('Error deleting');
       });
   };
   return (
@@ -133,6 +164,21 @@ export default function page() {
       ) : (
         <Loader />
       )}
+
+      {userData?.user ? (
+        <Popconfirm
+          title="Delete this blog"
+          description="Are you sure to delete this blog?"
+          onConfirm={deleteAccount}
+          okText="Yes"
+          cancelText="No"
+          placement="left"
+        >
+          <Tooltip title="Delete Account" placement="top" arrow>
+            <FloatButton icon={<DeleteFilled />} />
+          </Tooltip>
+        </Popconfirm>
+      ) : null}
     </>
   );
 }
