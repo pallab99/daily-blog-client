@@ -47,7 +47,7 @@ export default function Page({ params }: { params: { id: string } }) {
       .delete(`https://daily-blog-uz5m.onrender.com/api/blog/${params.id}`)
       .then((response) => {
         message.success('Blog deleted successfully');
-        router.push('/userDetails');
+        router.push('/blogsCreatedByUser');
       })
       .catch((error) => {
         message.error('SomeThing went wrong');

@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 //@ts-ignore
 'use client';
-import { Button, Collapse, Skeleton, message } from 'antd';
+import { Button, Skeleton } from 'antd';
 import axios from 'axios';
 //@ts-ignore
 import { useEffect, useState } from 'react';

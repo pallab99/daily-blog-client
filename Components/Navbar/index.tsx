@@ -3,41 +3,81 @@
 'use client';
 //@ts-ignore
 import { Button, Dropdown, message } from 'antd';
-import { UserOutlined, WarningOutlined } from '@ant-design/icons';
+import { UserOutlined, WarningOutlined, BookOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { decodeJWT } from '@/helper/jwt';
+import axios from 'axios';
 require('./index.css');
 
 export default function index() {
   const router = useRouter();
   const isLocalStorageAvailable =
     typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
-  let accessToken;
+  let accessToken: any;
   let email;
   let name: any;
   if (isLocalStorageAvailable) {
     accessToken = localStorage.getItem('accessToken');
 
-    email = localStorage.getItem('email');
-    name = localStorage.getItem('name');
+    // email = localStorage.getItem('email');
+    // name = localStorage.getItem('name');
   }
+  const jwtInfo: any = decodeJWT(accessToken);
+  useEffect(() => {
+    if (accessToken) getUserDetails(accessToken);
+  }, [accessToken]);
+  const [userData, setUserData] = useState([]) as any[];
+  const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
+
+  const getUserDetails = (accessToken: any) => {
+    setIsUserDataLoaded(true);
+    axios
+      .get(`https://daily-blog-uz5m.onrender.com/api/user/me/${jwtInfo?.id}`, {
+        headers: {
+          //@ts-ignore
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        setUserData(response.data);
+        setIsUserDataLoaded(false);
+      })
+      .catch((error) => {
+        setIsUserDataLoaded(false);
+      });
+  };
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('email');
-    localStorage.removeItem('name');
-    router.push('/');
+    axios
+      .get('https://daily-blog-uz5m.onrender.com/api/user/logout')
+      .then((response) => {
+        message.error(response?.data?.message);
+        localStorage.removeItem('accessToken');
+        router.push('/');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   let handleMenuClick = (e: any) => {
     if (e.key === '1') {
-      router.push('/userDetails');
+      router.push('/blogsCreatedByUser');
     } else if (e.key === '2') {
       handleLogout();
+    } else if (e.key === '3') {
+      router.push('/me');
     }
   };
 
   const items = [
     {
-      label: 'profile',
+      label: 'Blogs',
       key: '1',
+      icon: <BookOutlined />,
+    },
+    {
+      label: 'Profile',
+      key: '3',
       icon: <UserOutlined />,
     },
     {
@@ -69,7 +109,7 @@ export default function index() {
               placement="bottom"
               icon={<UserOutlined />}
             >
-              {name}
+              {userData?.user?.name}
             </Dropdown.Button>
           ) : (
             <>
